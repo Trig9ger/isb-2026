@@ -2,12 +2,20 @@ from math import sqrt
 from scipy.special import gammaincc, erfc
 
 def read_sequence(path_seq: str) -> str:
+    """
+    :param path_seq: указатель пути до файла с последовательностью рандомных бинарных чисел
+    :return: строку последовательности
+    """
     sequence = ""
     with open(path_seq, 'r', encoding='utf-8') as file:
         sequence += file.read()
     return sequence
 
 def frequency_test(sequence: str) -> float:
+    """
+    :param sequence: строка последовательности бинарных чисел
+    :return: возвращает p-value значение согласно частотному побитовому тесту
+    """
     n = len(sequence)
     s = 0
     for i in sequence:
@@ -20,6 +28,10 @@ def frequency_test(sequence: str) -> float:
     return erfc(p)
 
 def consecutive_test(sequence: str) -> float:
+    """
+    :param sequence: строка последовательности бинарных чисел
+    :return: возвращает p-value значение согласно тесту на подряд идущие биты
+    """
     n = len(sequence)
     s = 0
 
@@ -42,6 +54,10 @@ def consecutive_test(sequence: str) -> float:
     return erfc(p)
 
 def byte_test(sequence: str) -> float:
+    """
+    :param sequence: строка последовательности бинарных чисел
+    :return: возвращает p-value значение согласно тесту на самую длинную последовательность едениц в байтах последовательности
+    """
     v  = [0, 0, 0, 0]
     n = len(sequence)
     check = 0
@@ -79,7 +95,8 @@ def byte_test(sequence: str) -> float:
     return p
 
 def main():
-    files = ["cpprand.txt", "crand.txt", "javarand.txt"]
+    files = ["crand.txt", "cpprand.txt", "javarand.txt"]
+    result = []
 
     for path in files:
         sequence = read_sequence(path)
@@ -89,14 +106,24 @@ def main():
         third_test = byte_test(sequence)
         
         if first_test < 0.01:
-            print(f'File {path} did not pass first test with p-value = {first_test}')
+            result.append(f'0 | File {path} did not pass the first test with p-value = {first_test}\n')
+        else:
+            result.append(f'1 | File {path} pass the first test with p-value = {first_test}\n')
         
         if second_test < 0.01:
-            print(f'File {path} did not pass second test with p-value = {second_test}')
+            result.append(f'0 | File {path} did not pass the second test with p-value = {second_test}\n')
+        else:
+            result.append(f'1 | File {path} pass the second test with p-value = {second_test}\n')
         
         if third_test < 0.01:
-            print(f'File {path} did not pass third test with p-value = {third_test}')
-            
+            result.append(f'0 | File {path} did not pass the third test with p-value = {third_test}\n')
+        else:
+            result.append(f'1 | File {path} pass the third test with p-value = {third_test}\n')
+        result.append('\n')
+
+    with open("results.txt", 'w', encoding='utf-8') as file:
+        file.writelines(result)
+        
 
 if __name__ == "__main__": 
     main()

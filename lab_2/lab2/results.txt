@@ -1,0 +1,12 @@
+1 | File cpprand.txt pass the first test with p-value = 0.21592493894014042
+1 | File cpprand.txt pass the second test with p-value = 0.5004800882427556
+1 | File cpprand.txt pass the third test with p-value = 0.4712189258231997
+
+1 | File crand.txt pass the first test with p-value = 0.7236736098317631
+1 | File crand.txt pass the second test with p-value = 0.2934250460371556
+1 | File crand.txt pass the third test with p-value = 0.9087610381824585
+
+1 | File javarand.txt pass the first test with p-value = 0.4795001221869535
+1 | File javarand.txt pass the second test with p-value = 0.26734947307149215
+1 | File javarand.txt pass the third test with p-value = 0.5499740068888472
+
